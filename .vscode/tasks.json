@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Log: my message (from clipboard)",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/log-turn.sh user",
+      "presentation": { "reveal": "silent", "panel": "shared", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Log: Claude reply (from clipboard)",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/log-turn.sh claude",
+      "presentation": { "reveal": "silent", "panel": "shared", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Log: sync to GitHub",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/sync.sh",
+      "presentation": { "reveal": "silent", "panel": "shared", "clear": true },
+      "problemMatcher": []
+    }
+  ]
+}
