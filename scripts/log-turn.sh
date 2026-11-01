@@ -3,7 +3,7 @@
 #
 # Usage: scripts/log-turn.sh <user|claude> [--stdin] [--turn N] [--session NAME] [--no-commit]
 #   user    wraps the clipboard text in a "USER" heading + blockquote
-#   # Note: I (Romaq) am can "USER" to "Romaq" for clarity. Anyone else using this script will need to edit accordingly.
+#   # Note: I (Romaq) am "USER" in log documents. Anyone else using this script will need to edit accordingly.
 #   claude  appends the clipboard text as-is (Claude replies already carry their own rules/heading)
 #   --stdin read from stdin instead of the clipboard (for testing or piping)
 #   --turn  force the turn number; --session adds a name: log/YYYY-MM-DD-NAME.md
@@ -61,7 +61,7 @@ if [[ "$role" == "user" ]]; then
   turn="${turn_override:-$((last_turn + 1))}"
   quoted="$(printf '%s\n' "$body" | sed 's/^/> /')"
   { [[ "$last_line" != "---" && "$nonempty" -gt 1 ]] && printf -- '---\n\n'
-    printf '## 🧑 Romaq · Turn %s · %s\n\n%s\n\n' "$turn" "$today" "$quoted"; } >> "$file"
+    printf '## 🧑 USER · Turn %s · %s\n\n%s\n\n' "$turn" "$today" "$quoted"; } >> "$file"
 else
   turn="${turn_override:-$(( last_turn > 0 ? last_turn : 1 ))}"
   first="$(printf '%s\n' "$body" | grep -m1 -v '^[[:space:]]*$' || true)"
