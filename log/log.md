@@ -442,3 +442,4 @@ Instructions to me are advisory, and I can miss things. A small script, scripts/
 Create the repo (no license, as you’ve set it).
 Continue with steps 3–6 of the setup list in Turn 5.
 Paste the privacy block into this project’s instructions, and then into your other projects as you adopt the process.
+---
