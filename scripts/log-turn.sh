@@ -3,7 +3,11 @@
 #
 # Usage: scripts/log-turn.sh <user|claude> [--stdin] [--turn N] [--session NAME] [--no-commit]
 #   user    wraps the clipboard text in a "USER" heading + blockquote
-#   # Note: I (Romaq) am "USER" in log documents. Anyone else using this script will need to edit accordingly.
+#
+#   # Note: the speaker label "USER" is hard-coded in two places below: the heading printed
+#   # for user turns, and the pattern in maxturn() that finds the last turn number.
+#   # If you change one, change both. Change the "human" emoticon as you find appropriate.
+#
 #   claude  appends the clipboard text as-is (Claude replies already carry their own rules/heading)
 #   --stdin read from stdin instead of the clipboard (for testing or piping)
 #   --turn  force the turn number; --session adds a name: log/YYYY-MM-DD-NAME.md
@@ -43,7 +47,7 @@ if (( use_stdin )); then body="$(cat)"; else body="$(read_clipboard)"; fi
 maxturn() { grep -hoE '^## 🧑 USER · Turn [0-9]+' "$1" 2>/dev/null | grep -oE '[0-9]+$' | sort -n | tail -1 || true; }
 last_turn="$(maxturn "$file")"
 if [[ -z "$last_turn" ]]; then
-  for f in $(ls -1r "$root"/log/*.md 2>/dev/null || true) "$root/log.md"; do
+  for f in $(ls -1r "$root"/log/[0-9]*.md 2>/dev/null || true) "$root/log/log.md" "$root/log.md"; do
     [[ "$f" == "$file" || ! -f "$f" ]] && continue
     last_turn="$(maxturn "$f")"
     [[ -n "$last_turn" ]] && break
