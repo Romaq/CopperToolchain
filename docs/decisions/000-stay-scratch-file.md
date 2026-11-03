@@ -17,7 +17,7 @@ is not justified by the risk.
 
 ## Actions
 - [x] Ignore rules corrected: one entry per line (`surveys/responses/`, `tmp.md`, `temp.md`)
-- [ ] `scripts/sync.sh` stages explicit paths instead of `git add -A`
+- [X] `scripts/sync.sh` stages explicit paths instead of `git add -A`
 - [x] Privacy check and pre-push hook installed; runbook written
 
 ## Revisit if
