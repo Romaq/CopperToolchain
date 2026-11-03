@@ -23,3 +23,20 @@
     - { name: searxng, type: LXC, runs: SearXNG, status: running, notes: "needs full configuration" }
       #    - { name: Games, runs: game servers, status: active, notes: "several VMs; not relevant to the toolchain yet." }
   notes: ""
+
+- name: Home Assistant
+  role: home automation, replacing the current cloud-based service
+  type: vm            # on Headless
+  status: unconfigured
+  notes: "VM exists but is unused; configuring it is a project task"
+
+- name: Offline backup drive
+  type: storage
+  specs: "2 TB USB SATA"
+  status: spare
+  notes: "to be attached to Headless for LAN backups"
+
+- name: Other managed devices
+  type: mixed
+  specs: "two laptops (one Windows 11 planned for Linux Mint, one Linux Mint); two Android phones"
+  status: active

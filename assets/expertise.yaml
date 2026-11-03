@@ -34,3 +34,9 @@
   history:
     - { date: 2026-11-02, level: novice, note: "hand-assembled very simple programs to hex, POKEd in from BASIC; long disused" }
   notes: background rather than directly applicable; goal is to apply the same tenacity to modern tools
+
+- name: Structured self-study (brilliant.org)
+  level: n/a
+  updated: 2026-11-02
+  history:
+    - { date: 2026-11-02, note: "daily practice habit sustained for close to a year; currently refreshing algebra" }
