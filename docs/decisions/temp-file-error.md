@@ -1,0 +1,1 @@
+2026-11-02 20:16 Found I had inadvertantly added a scratch file that held "Low sensitivity" information. On evaluation, I decided `git rm` was sufficient, adopt better commit habits, update ignore files, and otherwise move forward.
