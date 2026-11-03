@@ -16,7 +16,7 @@
   storage:
     - { pool: "NVMe, ZFS", holds: "VM disks and containers" }
     - { pool: "NVMe, directory", holds: "snippets only" }
-    - { pool: "SATA, XFS striped mirror (4 disks)", holds: "backups, imports, ISOs, container templates" }
+    - { pool: "SATA, ZFS striped mirror (4 disks)", holds: "backups, imports, ISOs, container templates" }
   virtual_devices:
     - { name: DNS, type: LXC, runs: Pi-hole, status: active }
     - { name: Fileserver, type: LXC, runs: Samba, status: active, notes: "other NAS options available" }
