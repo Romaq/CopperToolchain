@@ -1,0 +1,25 @@
+- name: Client
+  role: primary workstation (all interactive work)
+  type: computer
+  os: Linux Mint 22.3 (Cinnamon, X11), Ubuntu 24.04 base
+  specs: "Intel Core i7-14700K (20 cores); 32 GiB RAM; ~2 TB local storage; NVIDIA GeForce RTX 5070; two 1920x1080 monitors"
+  tools: "gcc 13.x, Python 3.12, git; VSCodium (Flatpak) with Claude Code extension"
+  status: active
+  notes: ""
+
+- name: Headless
+  role: home-lab server (Proxmox VE host)
+  type: server
+  os: Proxmox VE 9.x
+  specs: "AMD Ryzen 9 7940HS (8 cores / 16 threads, integrated graphics); 96 GiB RAM; 2 TB NVMe"
+  status: active
+  storage:
+    - { pool: "NVMe, ZFS", holds: "VM disks and containers" }
+    - { pool: "NVMe, directory", holds: "snippets only" }
+    - { pool: "SATA, XFS striped mirror (4 disks)", holds: "backups, imports, ISOs, container templates" }
+  virtual_devices:
+    - { name: DNS, type: LXC, runs: Pi-hole, status: active }
+    - { name: Fileserver, type: LXC, runs: Samba, status: active, notes: "other NAS options available" }
+    - { name: searxng, type: LXC, runs: SearXNG, status: running, notes: "needs full configuration" }
+      #    - { name: Games, runs: game servers, status: active, notes: "several VMs; not relevant to the toolchain yet." }
+  notes: ""

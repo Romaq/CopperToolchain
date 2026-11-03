@@ -1,0 +1,21 @@
+Details
+- **Client:** whether CUDA or other GPU compute is set up, if you plan to use the GPU for anything; the storage type (NVMe or SATA); the network link speed (1, 2.5, or 10 GbE).
+I am open to direction on setting this up.
+- **Headless:** the Proxmox major version (for example "9.x"), the storage layout (ZFS, LVM, or plain), the network link speed, and whether the three virtual devices are VMs or containers.
+9.x with plans to maintain the version
+The three devices are LXC containers. I have one unused "Home Assistant" in VM which I need to configure for use with home devices. Setting up this VM properly to replace Google Home will be one of the tasks for this project.
+I have 
+- **Both:** whether any backup arrangement exists, in a sentence, with no locations.
+I have set up the "Datacenter" with "local" Type: Directory storage on NVMe, but relegated to "Snippets" content on the NVE.
+"local-zfs" Type: ZFS storage on NVMe for Disk Image, Container content
+"tank: Type Directory storage on a ZFS formatted 4 SATA RAID in a striped mirror array for "slow" storage. This contains Backup, Import, ISO image and Container templates.
+Forming an efficient, timely backup plan for all hosts is one purpose for the formation for this project, as well as ensuring timely updates for security. I have an offline USB 2 TB SATA drive. I would like to connect this to Headless for the purpose of making LAN backups for all machines on a reasonable basis. Relevant hardware: One Windows11 laptop with intent to convert to Linux Mint, one laptop already using Linux Mint, both machines used by another household member. There are also two android phone devices.
+LAN is behind CGNAT that disallows direct connections. An SSH proxy for TCP connections is set up to allow external connections to one of the games. I wish to develop a tool chain as part of this project that allows TCP and UDP over the SSH connection at a later time. For the current priority, my intent is to have the Headless and Client machines in working order including notifications to my cell phone, perhaps using Gotify, and then I will expand the tools to include the other assets. "Tools for CGNAT" will be a part of this project.
+
+Yes, a privacy-check.sh​ would be a welcome addition to the tool chain including instructions for when to use this, such as just before pushing a commit so conflicts can be resolved.
+
+One asset I just thought of: I am using brilliant.org​ with an unbroken streak of nearly a year for personal development. While I am currently refreshing Algebra, I am open to choosing a course to improve my use of my existing skill assets to improve the creation and use of scripts and processes created in this Copper Toolchain project as well as other projects I wish to build using the tools and assets available. What would you suggest so I can better interface with my current assets for my current projects?
+
+My former supervisor suggested I request from you a survey of relevant questions for you to ask me to dispassionately evaluate my relevant skill assets for expertise and usefulness specific for my personal goals. My personal goals list would be a good starting point in the area of ability to understand, manage, and direct IT related projects to completion. One such project is "The Long Climb" Minecraft modpack project I have here. The other projects center around better management of my LAN with such goals (but not limited to) a coherent LAN backup system, replacing Google Home, and potentially presenting and offering my skills for contract hiring. So a good survey would initially query for relevant goals, and then perhaps as a second survey based on the first, query for specific skills, and potentially evaluate so you can guide me towards achieving my goals with better understanding and dispassionate evaluation of my current position.
+
+The cat > assets/...​ commands are run including the correction, and the privacy-check.sh​ script would be welcome. I gave my supervisor's suggestion earlier in this message. If appropriate, a file could be created for the survey, and I could fill the survey and upload loaded for evaluation. I would wish to publish the survey, but upload my responses directly for evaluation.

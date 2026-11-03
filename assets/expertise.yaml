@@ -1,0 +1,36 @@
+# Expertise inventory. Levels: novice | working | advanced | expert
+# history: append one line whenever a level or milestone changes.
+- name: Bash scripting
+  level: novice
+  updated: 2026-11-02
+  history:
+    - { date: 2026-11-02, level: novice, note: "reads, interprets, and edits scripts; uses man pages to learn unfamiliar commands" }
+  notes: frequent use, often with limited understanding of the internals
+
+- name: Python
+  level: novice
+  updated: 2026-11-02
+  history:
+    - { date: 2026-11-02, level: novice, note: "follows program logic; relies on outside expertise for syntax" }
+  notes: ""
+
+- name: Git (CLI and GitHub web)
+  level: novice
+  updated: 2026-11-02
+  history:
+    - { date: 2026-11-02, level: novice, note: "basic versioning concepts; creates, clones, and pushes repos" }
+  notes: ""
+
+- name: BASIC and program logic
+  level: novice          # proposed: please confirm
+  updated: 2026-11-02
+  history:
+    - { date: 2026-11-02, level: novice, note: "hobbyist, non-professional; program logic, recursion, flow" }
+  notes: ""
+
+- name: 6502 machine language (Commodore 64)
+  level: novice          # proposed: please confirm
+  updated: 2026-11-02
+  history:
+    - { date: 2026-11-02, level: novice, note: "hand-assembled very simple programs to hex, POKEd in from BASIC; long disused" }
+  notes: background rather than directly applicable; goal is to apply the same tenacity to modern tools
