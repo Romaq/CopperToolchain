@@ -1,0 +1,1 @@
+2026-11-02 20:16 Found I had inadvertently added a scratch file that held "Low sensitivity" information. On evaluation, I decided `git rm` and bringing things to a close had the best cost vs. risk. Learning the documentation and process is the value at this stage.
