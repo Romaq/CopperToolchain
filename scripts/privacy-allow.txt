@@ -1,3 +1,5 @@
 # privacy-allow.txt - harmless matched text that privacy-check.sh should ignore.
 # One fixed string per line (exact, case-sensitive). Lines starting with # are ignored.
 git@github.com
+127.0.0.1
+0.0.0.0

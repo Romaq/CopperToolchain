@@ -74,7 +74,7 @@ while IFS=$'\t' read -r name regex; do
   [[ -z "$name" || "$name" == \#* ]] && continue
   while IFS= read -r hit; do
     idx="${hit%%:*}"; val="${hit#*:}"
-    if [[ -s "$tmp/allow" ]] && grep -qFf "$tmp/allow" <<< "$val"; then continue; fi
+    if [[ -s "$tmp/allow" ]] && grep -qxFf "$tmp/allow" <<< "$val"; then continue; fi
     IFS=$'\t' read -r path line <<< "${META[idx-1]}"
     report "[$name]" "$path:$line" "$(mask "$val")"
   done < <(grep -noP -- "$regex" "$tmp/text" 2>/dev/null)
