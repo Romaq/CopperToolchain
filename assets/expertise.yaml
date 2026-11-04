@@ -40,3 +40,10 @@
   updated: 2026-11-02
   history:
     - { date: 2026-11-02, note: "daily practice habit sustained for close to a year; currently refreshing algebra" }
+
+- name: Game server setup (LinuxGSM)
+  level: advanced            # novice | working | advanced | expert; see the definitions in surveys/README.md
+  updated: 2026-11-03
+  history:
+    - { date: 2026-11-03, note: "comfortable creating and installing servers with LinuxGSM" }
+  notes: ""
