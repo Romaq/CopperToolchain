@@ -1,3 +1,8 @@
 surveys/responses
 /tmp.md
 /temp.md
+/tmp/
+# Ignore editor temp files. -RMQ
+*~
+*.swp
+*.swo
