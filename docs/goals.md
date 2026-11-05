@@ -19,7 +19,7 @@ never in this repository. Priorities are the original ones; open questions are i
 - **Horizon:** 12 months
 - **Done looks like:** The modpack is publicly released on CurseForge in a release-ready state, and the tools used to maintain it are public on GitHub.
 - **So far:** An earlier attempt was set aside. The work now continues as its own project, with this toolchain supplying the process and tooling.
-- **Depends on:** C (multiplayer testing with remote players).
+- **Depends on:** C only for UDP-based games; Minecraft Java Edition and perhaps others only requires TCP.
 - **Priority:** 1
 
 ### B. Home lab foundations
@@ -38,7 +38,7 @@ never in this repository. Priorities are the original ones; open questions are i
 - **Done looks like:** A specific game (Hytale) is hosted at home and joined securely by invited players.
 - **So far:** A TCP-only approach works for some traffic. Most modern games use UDP, which is not yet solved.
 - **Open:** The approach is not yet chosen (see follow-up questions). This is the largest known skill gap.
-- **Enables:** A (multiplayer testing).
+- **Enables:** hosting Hytale and any other UDP-based games in A.
 - **Priority:** 3
 
 ### D. Household library: organize, share, and safeguard

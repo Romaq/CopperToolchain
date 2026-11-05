@@ -29,6 +29,7 @@ arrangements, and other network details stay out of this public repository.
 - [ ] **LAN backup plan for all hosts.** Scope: Client, Headless and its containers and VM,
   other laptops, phones. Done when: a written plan covers what is backed up, how often, where
   copies live, and how the offline drive is rotated, and **one restore has been tested per class of host**.
+- [ ] **NUT (Network UPS Tools).** Scope: UPS provides power to sustain PVE, notify all listening, active devices to gracefully power off. Warn laptops powered on but do not power off. Notify of power loss to Gotify. Done when: A test sent from the NUT server sucessfully powers down all appropriate equipment. Possible "acid" test: Removing power from the UPS unit appropriately notifies and powers down equipment to match the prior "safe" test result.
 - [ ] **Timely security updates.** Done when: a routine exists for checking, applying, and
   confirming updates on every host, with a notification when something is overdue.
 
