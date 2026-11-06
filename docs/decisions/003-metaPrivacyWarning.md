@@ -1,4 +1,4 @@
-# 001: Certificate Warnings on various host web admin panels (low sensitivity)
+# 003: Meta Privacy Warning
 
 - Date: 2026-11-04
 - Status: accepted

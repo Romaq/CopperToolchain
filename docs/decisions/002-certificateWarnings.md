@@ -1,4 +1,4 @@
-# 001: Certificate Warnings on various host web admin panels (low sensitivity)
+# 002: Certificate Warnings on various host web admin panels (low sensitivity)
 
 - Date: 2026-11-04
 - Status: accepted
