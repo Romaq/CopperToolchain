@@ -44,3 +44,13 @@ for the map of the repository and `docs/roadmap.md` and `docs/goals.md` for dire
 ## Where to look
 
 `docs/PROJECT-GUIDE.md` (map), `docs/runbooks/` (sensitive data in git, UDP over SSH), `docs/decisions/`, `assets/` (inventory), `surveys/` (templates), `templates/new-project-kit/` (the starter kit), `log/` (full history; search by phrase, not by turn number).
+
+## Cross-project: The Long Climb (TLC)
+
+- TLC is a separate Claude.ai project with its own repository. It is a customer of this project's tools and processes.
+  Modpack-specific work stays in TLC; generic tooling is built here.
+- TLC credits CopperToolchain in its README as a tool source. Copied scripts are recorded in `tools/FROM-COPPERTOOLCHAIN.md` there.
+- TLC knows the available tools from `docs/TOOLS.md`, generated here and uploaded to TLC's project files after any tool change.
+- TLC sends needs as `REQUEST FOR THE COPPERTOOLCHAIN PROJECT` blocks; record them in `docs/requests/`.
+- Cadence: alternate days. Exceptions are a tool blocking TLC, or a declared multi-day task (note start and expected end here).
+- Every session-ending reply carries a HANDOFF CHECK block.
