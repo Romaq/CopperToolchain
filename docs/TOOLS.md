@@ -1,7 +1,7 @@
 # CopperToolchain tools available to customer projects
 
 Source: https://github.com/Romaq/CopperToolchain (license: 0BSD)
-Manifest date: 2026-11-06 (hand-written stopgap; a generated version will replace it)
+Manifest date: 2026-11-07 (hand-written stopgap; a generated version will replace it)
 
 A new project gets its scripts from the starter kit, not from CopperToolchain's own `scripts/` folder.
 
