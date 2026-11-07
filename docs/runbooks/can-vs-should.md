@@ -1,5 +1,5 @@
 # Five Rules for adding services on the Home Lab:
-> "Your scientists were so preoccupied with whether they could, they didn't stop to think if they should" --Ian Malcom, Jurrasic Park
+> "Your scientists were so preoccupied with whether they could, they didn't stop to think if they should" --Ian Malcolm, Jurrassic Park (1993)
 
 1. What problem does it solve today?
 2. What breaks if it fails?
