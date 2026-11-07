@@ -26,7 +26,7 @@ for the map of the repository and `docs/roadmap.md` and `docs/goals.md` for dire
 3. Notifications: Gotify on the home lab server, working with Proxmox's test message. Later: an outside heartbeat that alerts on silence, and UPS monitoring.
 4. Keep it simple: no reverse proxy for now; trust the Proxmox certificate authority on the client first; be cautious with Webmin.
 5. UDP for hosted games: an SSH reverse tunnel carrying a UDP-in-TCP bridge, verified with a probe that can fail; WireGuard is the fallback if play feels laggy.
-6. A license has not been added yet. Candidates: Unlicense, CC0, 0BSD (see the discussion in the logs: search `Licenses that meet both`).
+6. The `LICENSE` for this project is 0BSD.
 
 ## Current work, in order
 
@@ -38,7 +38,6 @@ for the map of the repository and `docs/roadmap.md` and `docs/goals.md` for dire
 
 ## Small items pending
 
-- Choose and add a `LICENSE`, then record the choice in `docs/decisions/`.
 - Inventory candidates awaiting a yes: extra hardware entries, Client storage details, the study-habit entry.
 - Add the three roadmap lines suggested after the notification design.
 
