@@ -17,3 +17,13 @@ I decided on the 0BSD license as stated in `/LICENSE`. The goal is maximum freed
 
 ## Revisit if
 The `LICENSE` does not scale with the scope and usage of this repository.
+
+## Claude's suggested note:
+### Decision: LICENSE is Zero-Clause BSD (0BSD)
+
+Date: 2026-11-06
+Chosen: 0BSD. Considered: Unlicense, CC0.
+Reason: the intent is no restrictions on use, including no attribution requirement,
+and 0BSD achieves that as a standard license text.
+Note: this supersedes the Unlicense selected when the repo was created.
+Status: `LICENSE` committed.
