@@ -13,7 +13,7 @@ It is a pattern to adapt, not a setup to copy. Your goals, hardware, and comfort
 2. **What are you after?** Write two sentences. Prompt 2 will help refine them into goals later.
 3. **Which license, if any?** Without a license, others have no legal permission to reuse your code, even
    if you intend them to. On GitHub you can add a `LICENSE` file from the web interface (Add file, Create new file,
-   name it `LICENSE`, then choose a license template). The CopperToolchain repository uses the Unlicense.
+   name it `LICENSE`, then choose a license template). The CopperToolchain repository uses 0BSD.
 
 ## Step 1: name it
 
