@@ -259,7 +259,7 @@ case "$marker" in
         pf="$(latest_log "$prev_path" 0)"
         if [[ -n "$pf" ]]; then
           rc=0; log_state "$pf" "$prev" || rc=$?
-          if (( rc == 1 )); then
+          if (( rc == 1 )) && ! [[ "$prev" == "$marker_name" && "$(basename "$pf")" == "$today"* ]]; then
             warn="**⚠ Log check:** the previous session for $prev (\`log/$(basename "$pf")\`) was not closed with \`COS $prev\`. Run \`scripts/log-turn.sh close --previous\`."
             echo "log-turn: WARNING: previous $prev log is not closed (log/$(basename "$pf"))" >&2
             notify "Previous session not closed" "$prev: log/$(basename "$pf") has no COS. Run: log-turn.sh close --previous" critical
