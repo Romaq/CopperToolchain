@@ -20,6 +20,7 @@ easy to recall.
 | A long run of green checks | Plans going well |
 | An automation I will not look at again | Fire and forget |
 | Someone is relying on my tool | Easy for you |
+| Something has gone badly wrong | Maxim 70 (failure) |
 
 ## Our own maxims
 
@@ -74,42 +75,49 @@ Entries below give the maxim's number and a gloss in our own words. The exact wo
 book. Numbers follow that wiki page; check them against the printed book.
 
 ### Maxim 14 (on mad science)
-"Mad Science" means never stopping to ask "what's the worst thing that could happen?"
+Mad science never asks what the worst thing that could happen is.
 Applied as: ask it. It is rule 2 of `can-vs-should.md`.
 
 ### Maxim 17 (on plans going well)
-The longer everything goes according to plan, the bigger the impending disaster.
+The longer everything goes to plan, the bigger the impending disaster.
 Applied as: a long run of green checks is a reason to test the checks. Use a verifier that can
 fail, and rehearse restores before they are needed.
 
 ### Maxim 26 (on fire and forget)
-"Fire and Forget" is fine, provided you never actually forget.
+Fire and forget is fine as long as you never actually forget.
 Applied as: automation that I will not look at again needs an alert when it stops. Alert on
 silence, not just on errors.
 
 ### Maxim 38 (on what is easy for you)
-Just because it's easy for you doesn't mean it can't be hard on your clients.
+What is easy for you can still be hard on your clients.
 Applied as: friends, family, and other projects using my tools do not share my setup.
 Test the instructions from their side (for example, a Windows client without bash).
 
 ### Maxim 41 (on backups)
-"Do you have a backup?" means "I can't fix this."
+Being asked whether you have a backup means the helper cannot fix it.
 Applied as: the backup is the fix, so test the restore, once per class of host.
 
 ### Maxim 43 (on stupid but working)
-If it's stupid and it works, it's still stupid and you're lucky.
+If it is stupid and it works, it is still stupid, and I was lucky.
 Applied as: write down that a working solution was luck, and put a "Revisit if" line on it.
 
 ### Maxim 61 (on grenades and small rooms)
-Don't bring big grenades into small rooms.
+Do not bring big grenades into small rooms.
 Applied as: scripts that run as root on the hypervisor have a wide blast radius. Read them
 first and try them in a scratch container.
 
 ### Maxim 68 (on exits)
-Negotiating from a position of strength does not mean you shouldn't also negotiate from a position near the exits.
+Negotiate from strength, but also from a position near the exits.
 Applied as: before a change, know how to go back (a snapshot, a backup, the old config copied aside).
 
-### Maxim 70 (on failure). Failure is not an option - it is mandatory. The option is whether or not to let failure be the last thing you do. Applied as: There **will** be occasions where no workable solution appears available, an error causes a catastrophic halt to the project, or security is breached despite best efforts using best practices. Such events are non-optional. The option is to decide to continue anyway.
+### Maxim 70 (on failure)
+Failure is mandatory, not optional. What is optional is whether it is the last thing you do.
+Applied as: there **will** be times when no workable solution appears, an error halts the
+project, or security is breached despite best efforts and best practices. Such events are
+not optional. The option is to decide to continue anyway.
+In practice: stop and contain it, write down what happened (a decision record, with no
+sensitive details), restore from what was prepared, and take one small next step.
+Continuing may also mean resting or handing the problem off, as long as the project is not abandoned.
 
 Candidates to add when a bad experience earns them: 42 (a plan nobody expects usually means
 something stupid is about to be tried) and 52 and 53 (the army and the intel on hand are never
