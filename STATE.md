@@ -51,22 +51,12 @@ HANDOFF CHECK block:
 6. The `LICENSE` is 0BSD (`docs/decisions/004-LICENSE.md`).
 7. TLC (The Long Climb) is a separate Claude.ai project with its own repository, a customer of this project's tools. Modpack work stays in TLC; generic tooling is built here. `docs/TONE.md` belongs to TLC and has been moved there.
 8. Cadence: alternate days between this project and TLC, one fresh conversation per task. Exceptions: a tool here is blocking TLC, or a declared multi-day task (note start and expected end below).
-9. Per-project logging design (accepted; build status unconfirmed, see below).
+9. Per-project logging design: accepted, build pending (decision 007, docs/decisions/007-liveLogging.md).
 10. Design maxims live in `docs/runbooks/design-maxims.md` (own maxims, plus Schlock Mercenary maxims credited to Howard Tayler by number with a gloss). The five-question checklist stays separate in `can-vs-should.md`; rule 5 now reads "Is there an existing tool, or a simpler 80% solution?"
 
-## Open decision: how to do live logging (wheel check, decision 007 not yet written)
+## Live logging: decided (007)
 
-Maxims in play: "Sometimes all options suck", "Make it work, then worry about making it work better", "Reinventing the wheel is generally a bad plan unless you make a very nice wheel".
-
-What was found (one round of searching, nothing tested):
-- Claude.ai web chats: only exporters (browser extensions and console scripts). One open-source extension also covers ChatGPT. Extensions can read everything on the page, so prefer open source that has been read, and check what each one sends out.
-- Claude Code in a repo: session logging already exists as local markdown (SpecStory CLI, or a Stop hook). The log lands in the repo being worked on, which removes the wrong-repo problem, and Claude would see live `git status`.
-- Nothing found covers per-project routing, session open/close, continued numbering, a loud commit failure, or the privacy check before push.
-
-Proposal (not yet accepted by the user):
-1. Make it work in at most two sessions: one keypress, the right repo, a correct number, a loud failure. Finish the per-project `log-turn.sh` design; park the rest.
-2. One timed trial of Claude Code with SpecStory (cloud sync off) on a small CT task. Costs to weigh: more leak risk in transcripts (command output, paths), commands run on the user's machine, the Flatpak sandbox, shared usage, no Claude.ai project files or memory.
-3. Defer splitting CT into a project-management project and a home-lab customer. Revisit if step 1 overruns or the trial shows Claude Code is the better home for CT's daily work.
+Build the minimal per-project logger first, with a two-session limit. Then run one timed Claude Code and SpecStory trial. Browser extensions and a CT split are not pursued now. See `docs/decisions/007-liveLogging.md`. If the two-session limit is passed, reopen the question.
 
 ## Design: per-project logging
 
@@ -95,8 +85,8 @@ Problem: shortcuts and `log-turn.sh` are tied to the CT root, so TLC turns were 
 
 ## Current work, in order
 
-1. **Session `CT · 2026-11-11b · Live Log decisions`:** settle the open live-logging decision above, draft decision 007 with the user, then close CT for the day.
-2. Build the minimal per-project logging (`log-turn.sh`, `sync.sh`), test what can be tested, and say what cannot. Skip if the Claude Code trial replaces it.
+1. **Next CT session:** build the minimal per-project logger (`log-turn.sh`, `sync.sh`). First confirm whether it is already built by checking `scripts/log-turn.sh` for `SOS`. Test what can be tested and say what cannot.
+2. **After it works:** one timed Claude Code and SpecStory trial (cloud sync off, small CT task), then record the result in the decision's Actions.
 3. TLC resumes (`TLC · date · ...`) once logging is settled.
 4. Then: Gotify on every service that emails (table of source, method, test, date, result; no tokens in the repo); LAN test of the UDP tool (search the logs for `stand-in relay` and `Real game stage`); onboarding a friend (DJV22) with the kit; Survey 2 only when asked; home lab sprint (backups, updates, UPS monitoring, certificates).
 
