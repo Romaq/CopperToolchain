@@ -19,6 +19,7 @@ fi
 SYNC_PATHS=(log docs assets scripts surveys templates prompts tools STATE.md project.conf README.md LICENSE .gitignore .vscode)
 
 REGISTRY="${COPPER_REGISTRY:-$HOME/.config/copper/projects}"
+HOLD="${COPPER_HOLD:-$(dirname "$REGISTRY")/hold}"
 
 # ------------------------------------------------------------------ helpers (duplicated from log-turn.sh)
 notify() {  # notify TITLE MESSAGE [critical]
@@ -61,6 +62,9 @@ load_project() {
 # ------------------------------------------------------------------ sync
 name="${1:-$(reg_active)}"
 [[ -n "$name" ]] || die "no active project. Register one, then start with: SOS <short_name>"
+if [[ -f "$HOLD" ]]; then
+  die "logging hold is set ($(head -1 "$HOLD")). Log a correct 'SOS <short_name>' first. Nothing synced."
+fi
 load_project "$name"
 cd "$P_ROOT"
 

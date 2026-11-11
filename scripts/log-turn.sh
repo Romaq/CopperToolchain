@@ -18,6 +18,15 @@
 #
 # Headings: "## 🧑 <short_name> USER · Turn N · date" and "## 🤖 <short_name> CLAUDE · Turn N · date".
 # The turn-number pattern (maxturn) accepts any label. Exit status: 0 ok, 1 refused or error, 3 commit failed.
+#
+# AI replies ("claude" or "ai"): the pasted text must carry its own heading
+#     ## 🤖 <short_name> <AI> · Turn N · YYYY-MM-DD
+# The project must match the active project and <AI> must be listed in project.conf
+# (participants=CLAUDE CHATGPT; default CLAUDE). Anything else is refused, never filed under a default name.
+#
+# HOLD: a wrong or unregistered SOS, a COS naming another project, or an AI heading naming another
+# project sets a hold file (default: "hold" next to the registry). While it is set, log-turn.sh and
+# sync.sh refuse to act. A correct "SOS <short_name>" (or "COS <active>") clears it.
 set -euo pipefail
 
 # Inside a Flatpak sandbox (e.g. VSCodium from Flathub) host tools like xclip, git and your
@@ -28,6 +37,7 @@ if [[ ( -e /.flatpak-info || -n "${CT_FORCE_FLATPAK:-}" ) && -z "${CT_ON_HOST:-}
 fi
 
 REGISTRY="${COPPER_REGISTRY:-$HOME/.config/copper/projects}"
+HOLD="${COPPER_HOLD:-$(dirname "$REGISTRY")/hold}"
 today="$(date +%F)"
 
 # ------------------------------------------------------------------ helpers (duplicated in sync.sh)
@@ -38,6 +48,11 @@ notify() {  # notify TITLE MESSAGE [critical]
   notify-send -u "$urgency" "$1" "$2" || true
 }
 die() { echo "log-turn: $1" >&2; notify "log-turn FAILED" "$1" critical; exit "${2:-1}"; }
+hold_die() {  # hold_die REASON : set the hold, then refuse
+  mkdir -p "$(dirname "$HOLD")"; printf '%s\n' "$1" > "$HOLD"
+  die "$1 HOLD SET: nothing is logged or synced until a correct 'SOS <short_name>' (or 'COS' for the active project) is logged."
+}
+fail() { if [[ -n "${HOLD_ON_FAIL:-}" ]]; then hold_die "$1"; else die "$1"; fi; }
 
 reg_active() { [[ -f "$REGISTRY" ]] || return 0; head -1 "$REGISTRY" | awk '$1=="active"{print $2}'; }
 reg_path()   { [[ -f "$REGISTRY" ]] || return 0; awk -F'\t' -v n="$1" 'NR>1 && NF>=2 && $1==n {print $2; exit}' "$REGISTRY"; }
@@ -49,23 +64,25 @@ conf_get() {  # conf_get FILE KEY
   printf '%s' "$v"
 }
 
-P_SHORT=""; P_LONG=""; P_ROOT=""
+P_SHORT=""; P_LONG=""; P_ROOT=""; P_PART=""
 load_project() {  # sets P_SHORT, P_LONG, P_ROOT; refuses anything that does not check out
   local name="$1" p
-  [[ "$name" =~ ^[A-Za-z0-9_-]+$ ]] || die "'$name' is not a valid project name (letters, digits, _ and - only)"
+  [[ "$name" =~ ^[A-Za-z0-9_-]+$ ]] || fail "'$name' is not a valid project name (letters, digits, _ and - only)"
   p="$(reg_path "$name")"
-  [[ -n "$p" ]] || die "project '$name' is not registered. Registered: $(reg_names | tr '\n' ' ')"
+  [[ -n "$p" ]] || fail "project '$name' is not registered. Registered: $(reg_names | tr '\n' ' ')"
   p="${p/#\~/$HOME}"
   if [[ ! -d "$p" ]] || ! git -C "$p" rev-parse --git-dir >/dev/null 2>&1; then
-    die "the registered path for '$name' is not a git repository"
+    fail "the registered path for '$name' is not a git repository"
   fi
-  [[ -f "$p/project.conf" ]] || die "the '$name' repository has no project.conf"
+  [[ -f "$p/project.conf" ]] || fail "the '$name' repository has no project.conf"
   [[ "$(conf_get "$p/project.conf" short_name)" == "$name" ]] \
-    || die "project.conf in the '$name' repository does not say short_name=$name; refusing to log into the wrong repository"
+    || fail "project.conf in the '$name' repository does not say short_name=$name; refusing to log into the wrong repository"
   P_SHORT="$name"
   P_ROOT="$(cd "$p" && pwd)"
   P_LONG="$(conf_get "$p/project.conf" long_name)"
   [[ -n "$P_LONG" ]] || P_LONG="$name"
+  P_PART="$(conf_get "$p/project.conf" participants)"
+  [[ -n "$P_PART" ]] || P_PART="CLAUDE"
 }
 
 reg_set_active() {  # rewrite line 1 atomically
@@ -187,6 +204,8 @@ cmd_status() {
     rc=0; log_state "$f" "$P_SHORT" || rc=$?
     echo "Latest log     : log/$(basename "$f") ($(case $rc in 0) echo closed;; 1) echo NOT closed;; *) echo no turns;; esac))"
   fi
+  if [[ -f "$HOLD" ]]; then echo "HOLD SET       : $(head -1 "$HOLD")"; fi
+  echo "Participants   : $P_PART"
   echo "Chat name      : $P_SHORT · $today · <topic>"
   notify "$P_LONG" "Active project: $P_SHORT · chat name: $P_SHORT · $today · <topic>"
 }
@@ -226,7 +245,8 @@ case "$cmd" in
   register) cmd_register; exit 0 ;;
   status)   cmd_status;   exit 0 ;;
   close)    cmd_close;    exit 0 ;;
-  user|claude) role="$cmd" ;;
+  user) role=user ;;
+  claude|ai) role=claude ;;
   *) usage ;;
 esac
 
@@ -248,10 +268,14 @@ if [[ "$role" == user ]]; then
   fi
 fi
 
+if [[ -f "$HOLD" && -z "$marker" ]]; then
+  die "HOLD: $(head -1 "$HOLD") Only a correct 'SOS <short_name>' or 'COS <active>' message is accepted until then. Nothing logged."
+fi
+
 warn=""
 case "$marker" in
   SOS)
-    load_project "$marker_name"                    # refuses unregistered or mismatched projects
+    HOLD_ON_FAIL=1 load_project "$marker_name"     # unregistered or mismatched: set the hold and refuse
     prev="$(reg_active)"
     if [[ -n "$prev" ]]; then
       prev_path="$(reg_path "$prev")"; prev_path="${prev_path/#\~/$HOME}"
@@ -268,11 +292,13 @@ case "$marker" in
       fi
     fi
     reg_set_active "$marker_name"
+    rm -f "$HOLD"
     ;;
   COS)
     active="$(reg_active)"
-    [[ "$marker_name" == "$active" ]] || die "COS $marker_name does not match the active project (${active:-none}). Nothing logged."
+    [[ "$marker_name" == "$active" ]] || hold_die "COS $marker_name does not match the active project (${active:-none}). Nothing logged."
     load_project "$active"
+    rm -f "$HOLD"
     ;;
   *)
     active="$(reg_active)"
@@ -283,7 +309,19 @@ esac
 
 root="$P_ROOT"
 label_user="$P_SHORT USER"
-label_claude="$P_SHORT CLAUDE"
+
+# AI replies must name their own project and author in their heading; nothing is guessed or defaulted.
+ai=""
+if [[ "$role" == claude ]]; then
+  hline="$(printf '%s\n' "$body" | grep -v '^[[:space:]]*$' | grep -m1 -v '^---[[:space:]]*$' || true)"
+  hre='^##[[:space:]]+🤖[[:space:]]+([A-Za-z0-9_-]+)[[:space:]]+([A-Za-z0-9_-]+)[[:space:]]+·[[:space:]]+Turn[[:space:]]+([0-9]+|N)[[:space:]]+·[[:space:]]+[0-9]{4}-[0-9]{2}-[0-9]{2}[[:space:]]*$'
+  [[ "$hline" =~ $hre ]] || die "the pasted reply does not start with a heading like '## 🤖 $P_SHORT <AI> · Turn N · date'. Not logged: replies are never filed under a default name."
+  [[ "${BASH_REMATCH[1]}" == "$P_SHORT" ]] || hold_die "the reply heading names project '${BASH_REMATCH[1]}' but the active project is '$P_SHORT' (wrong SOS, or the reply came from another chat)."
+  ai="${BASH_REMATCH[2]}"
+  [[ " $P_PART " == *" $ai "* ]] || die "'$ai' is not a listed participant for $P_SHORT (project.conf participants: $P_PART). Not logged."
+  [[ "$(printf '%s\n' "$body" | grep -m1 -v '^[[:space:]]*$')" == "---" ]] || body=$'---\n\n'"$body"
+  [[ "$(printf '%s\n' "$body" | grep -v '^[[:space:]]*$' | tail -1)" == "---" ]] || body="$body"$'\n\n---'
+fi
 file="$root/log/$today${session:+-$session}.md"
 mkdir -p "$root/log"
 
@@ -291,7 +329,7 @@ mkdir -p "$root/log"
 # recent earlier log IN THIS REPOSITORY. A repository with no logs starts at 1. --turn N overrides.
 last_turn="$(maxturn "$file")"
 if [[ -z "$last_turn" ]]; then
-  for f in $(ls -1r "$root"/log/[0-9]*.md 2>/dev/null || true) "$root/log/log.md" "$root/log.md"; do
+  for f in $(ls -1 "$root"/log/[0-9]*.md 2>/dev/null | sed 's/\.md$//' | LC_ALL=C sort -r | sed 's/$/.md/' || true) "$root/log/log.md" "$root/log.md"; do
     [[ "$f" == "$file" || ! -f "$f" ]] && continue
     last_turn="$(maxturn "$f")"
     [[ -n "$last_turn" ]] && break
@@ -313,12 +351,10 @@ if [[ "$role" == "user" ]]; then
   if [[ -n "$warn" ]]; then printf '%s\n\n' "$warn" >> "$file"; fi
 else
   turn="${turn_override:-$(( last_turn > 0 ? last_turn : 1 ))}"
-  first="$(printf '%s\n' "$body" | grep -m1 -v '^[[:space:]]*$' || true)"
-  if [[ "$first" == "---" ]]; then
-    printf '%s\n\n' "$body" >> "$file"
-  else
-    printf -- '---\n\n## 🤖 %s · Turn %s · %s\n\n%s\n\n---\n\n' "$label_claude" "$turn" "$today" "$body" >> "$file"
+  if [[ "$last_line" == "---" ]]; then   # the file already ends with a rule: drop the reply's leading one
+    body="$(printf '%s\n' "$body" | awk '!d && /^---[ \t]*$/ {d=1; next} {print}')"
   fi
+  printf '%s\n\n' "$body" >> "$file"
 fi
 
 if (( commit )); then
@@ -326,6 +362,7 @@ if (( commit )); then
 fi
 
 msg="Logged $role turn $turn → $P_SHORT"
+[[ -n "$ai" ]] && msg="$msg · $ai"
 [[ "$marker" == SOS ]] && msg="$msg · name the chat: $P_SHORT · $today · <topic>"
 [[ "$marker" == COS ]] && msg="$msg · now log Claude's reply to finish closing"
 echo "$msg"
