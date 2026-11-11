@@ -1,4 +1,5 @@
 surveys/responses
+# Ignore scratch files created to gather thoughts or security triage.
 /tmp.md
 /temp.md
 /tmp/
