@@ -74,40 +74,42 @@ Entries below give the maxim's number and a gloss in our own words. The exact wo
 book. Numbers follow that wiki page; check them against the printed book.
 
 ### Maxim 14 (on mad science)
-Mad science never asks what the worst thing that could happen is.
+"Mad Science" means never stopping to ask "what's the worst thing that could happen?"
 Applied as: ask it. It is rule 2 of `can-vs-should.md`.
 
 ### Maxim 17 (on plans going well)
-The longer everything goes to plan, the bigger the impending disaster.
+The longer everything goes according to plan, the bigger the impending disaster.
 Applied as: a long run of green checks is a reason to test the checks. Use a verifier that can
 fail, and rehearse restores before they are needed.
 
 ### Maxim 26 (on fire and forget)
-Fire and forget is fine as long as you never actually forget.
+"Fire and Forget" is fine, provided you never actually forget.
 Applied as: automation that I will not look at again needs an alert when it stops. Alert on
 silence, not just on errors.
 
 ### Maxim 38 (on what is easy for you)
-What is easy for you can still be hard on your clients.
+Just because it's easy for you doesn't mean it can't be hard on your clients.
 Applied as: friends, family, and other projects using my tools do not share my setup.
 Test the instructions from their side (for example, a Windows client without bash).
 
 ### Maxim 41 (on backups)
-Being asked whether you have a backup means the helper cannot fix it.
+"Do you have a backup?" means "I can't fix this."
 Applied as: the backup is the fix, so test the restore, once per class of host.
 
 ### Maxim 43 (on stupid but working)
-If it is stupid and it works, it is still stupid, and I was lucky.
+If it's stupid and it works, it's still stupid and you're lucky.
 Applied as: write down that a working solution was luck, and put a "Revisit if" line on it.
 
 ### Maxim 61 (on grenades and small rooms)
-Do not bring big grenades into small rooms.
+Don't bring big grenades into small rooms.
 Applied as: scripts that run as root on the hypervisor have a wide blast radius. Read them
 first and try them in a scratch container.
 
 ### Maxim 68 (on exits)
-Negotiate from strength, but also from a position near the exits.
+Negotiating from a position of strength does not mean you shouldn't also negotiate from a position near the exits.
 Applied as: before a change, know how to go back (a snapshot, a backup, the old config copied aside).
+
+### Maxim 70 (on failure). Failure is not an option - it is mandatory. The option is whether or not to let failure be the last thing you do. Applied as: There **will** be occasions where no workable solution appears available, an error causes a catastrophic halt to the project, or security is breached despite best efforts using best practices. Such events are non-optional. The option is to decide to continue anyway.
 
 Candidates to add when a bad experience earns them: 42 (a plan nobody expects usually means
 something stupid is about to be tried) and 52 and 53 (the army and the intel on hand are never

@@ -1,6 +1,6 @@
 # Five Rules for adding services on the Home Lab
 
-> "Your scientists were so preoccupied with whether they could, they didn't stop to think if they should" -- Ian Malcolm, Jurassic Park (1993)
+> "Yeah, yeah, but your scientists were so preoccupied with whether or not they could that they didn't stop to think if they should." -- Ian Malcolm, Jurassic Park (1993)
 
 The checklist below is one of the project's design maxims. The rest are in `design-maxims.md` in this folder.
 
