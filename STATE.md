@@ -1,4 +1,4 @@
-# Handoff state (2026-11-11)
+# Handoff state (2026-11-11, end of session b)
 
 Purpose: let a fresh Claude conversation in this project continue without re-reading the whole log.
 Update it at the end of each session (ask Claude to rewrite it), commit it, and upload the new copy to the project's files.
@@ -15,13 +15,18 @@ for the map of the repository and `docs/roadmap.md` and `docs/goals.md` for dire
 - `long_name`: "The Copper Toolchain". Least collision risk. Spaces allowed.
 - `directory_name`: `CopperToolchain`. The long name made POSIX- and Windows-safe: only `A-Z a-z 0-9 . _ -`, no spaces, no `: < > " / \ | ? *`.
 - In scripts use lowercase with underscores (`short_name`) or UPPER_CASE for exported values. Projects live under `~/Projects/` (plural).
+- Live Logging (LL), identifier `liveLogging` (scripts: `live_logging`): committing the discussion stream into dated logs. See `docs/GLOSSARY.md`.
+- Decision files are named `NNN-lowerCamelTopic.md`.
 
 ## Conventions to keep
 
-- Replies start and end with `---`. Headings are `## 🤖 CT CLAUDE · Turn N · date` (this project) and `## 🧑 CT USER · Turn N · date`. The emoticons are hard-coded in the scripts; the label carries the `short_name`. The user's turn number is authoritative. If the user's message does not state its number, ask in one line at the top of the reply instead of guessing (a guessed number put two replies out of step with the log on 2026-11-11).
+- Replies start and end with `---`. Headings are `## 🤖 CT CLAUDE · Turn N · date` (this project) and `## 🧑 CT USER · Turn N · date`. The emoticons are hard-coded in the scripts; the label carries the `short_name`. The user's turn number is authoritative.
+- Turn numbers: the user states the number in the first message of every conversation. Later messages may omit it if they continue the sequence; if a number cannot be inferred, ask in one line at the top of the reply instead of guessing (a guessed number put two replies out of step with the log on 2026-11-11).
 - Until the log-turn rewrite lands, the script still writes `🧑 USER`; the user edits by hand if wanted. Its turn-number pattern accepts any label.
-- The log is public. Flag personal details before doing anything else, offer placeholder wording, never repeat them in replies or files. Private files are attached, not pasted. Never ask for a paste that would contain a name or email (for example raw `git log --show-signature`).
+- The log is public. Flag personal details before doing anything else, offer placeholder wording, never repeat them in replies or files. Private files are attached, not pasted. Never ask for a paste that would contain a name or email (for example raw `git log --show-signature`). Money matters (what can or cannot be afforded) are personal: use neutral wording such as "not available on the current plan".
 - Be direct and honest; say what was tested and what was not; keep steps small; apply the five-question test (`docs/runbooks/can-vs-should.md`) before adding any service. The design maxims in `docs/runbooks/design-maxims.md` are the post-it phrases for snap judgements.
+- Decision records are short; the detailed "why" lives in the log. Each decision has a `## Discussion` section pointing at a log file and a phrase to search for.
+- Design maxim: make mistakes hard to make, easy to catch, and easy to correct. Prefer simple, scripted automation over manual tracking.
 - Inventory additions: give notice first, then supply the entry, and let the user apply it.
 - Scripts run on the host through system keyboard shortcuts, because the editor is a sandboxed Flatpak.
 - Claude sees only the synced snapshot of selected repo files (plus anything attached). It cannot see live `git status`, unpushed commits, signing setup or shortcuts, its sandbox has no SSH or network, and it cannot fetch GitHub file pages. Anything involving the live repo or a real tunnel is untested until the user runs it.
@@ -29,7 +34,7 @@ for the map of the repository and `docs/roadmap.md` and `docs/goals.md` for dire
 - Session titles: `<short_name> · YYYY-MM-DD · <task>`. Two sessions on one day get `a` and `b` after the date (`2026-11-09a`). Add "(day 2)" for a declared multi-day task. Both sessions still log to the same dated file, and the turn numbers continue.
 - Mobile or chat-only moments (no scripts, no editor): use a chat inside this same project titled `CT · date · mobile capture`. It is capture-only: text to paste in later, logged by hand with `--turn N` at the desk. No separate project.
 - Every reply that ends a session, or produces something the other project needs, closes with a HANDOFF CHECK block.
-- Offer files as downloads to replace by hand-free copying where possible; the user prefers the method least prone to human error.
+- Offer files as downloads rather than copy-paste blocks where possible; the user prefers the method least prone to human error. A patch needs the current file attached.
 - Usage: Claude cannot see the meter or the reset time. The HANDOFF CHECK carries a rough light / moderate / heavy judgement from conversation size only; heavy means start a fresh conversation for the next task.
 
 Session start checklist: (a) name the chat `<short_name> · date · topic`; (b) confirm which repo the shortcut will write to (the notification names it); (c) log the first turn; (d) state your turn number in the first message.
@@ -49,14 +54,15 @@ HANDOFF CHECK block:
 4. Keep it simple: no reverse proxy for now; trust the Proxmox certificate authority on the client first; be cautious with Webmin.
 5. UDP for hosted games: an SSH reverse tunnel carrying a UDP-in-TCP bridge, verified with a probe that can fail; WireGuard is the fallback if play feels laggy.
 6. The `LICENSE` is 0BSD (`docs/decisions/004-LICENSE.md`).
-7. TLC (The Long Climb) is a separate Claude.ai project with its own repository, a customer of this project's tools. Modpack work stays in TLC; generic tooling is built here. `docs/TONE.md` belongs to TLC and has been moved there.
+7. TLC (The Long Climb) is a separate Claude.ai project with its own repository, a customer of this project's tools (`docs/decisions/006-TLCRelationship.md`, being completed). Modpack work stays in TLC; generic tooling is built here. `docs/TONE.md` belongs to TLC and has been moved there.
 8. Cadence: alternate days between this project and TLC, one fresh conversation per task. Exceptions: a tool here is blocking TLC, or a declared multi-day task (note start and expected end below).
-9. Per-project logging design: accepted, build pending (decision 007, docs/decisions/007-liveLogging.md).
-10. Design maxims live in `docs/runbooks/design-maxims.md` (own maxims, plus Schlock Mercenary maxims credited to Howard Tayler by number with a gloss). The five-question checklist stays separate in `can-vs-should.md`; rule 5 now reads "Is there an existing tool, or a simpler 80% solution?"
+9. Per-project logging design: accepted, build pending (decision 007, `docs/decisions/007-liveLogging.md`).
+10. Design maxims live in `docs/runbooks/design-maxims.md` (own maxims, plus Schlock Mercenary maxims credited to Howard Tayler by number with a gloss). The five-question checklist stays separate in `can-vs-should.md`; rule 5 reads "Is there an existing tool, or a simpler 80% solution?"
+11. Live Logging (007): build the minimal per-project logger first, within two sessions. Claude Code is not available on the current plan, so the SpecStory trial is dropped unless the CT project itself is at risk of failure. Browser exporter extensions and splitting CT into two projects are not pursued now.
 
-## Live logging: decided (007)
+## Live Logging: decided (007), build pending
 
-Build the minimal per-project logger first, with a two-session limit. Then run one timed Claude Code and SpecStory trial. Browser extensions and a CT split are not pursued now. See `docs/decisions/007-liveLogging.md`. If the two-session limit is passed, reopen the question.
+Build the minimal per-project logger first, with a two-session limit. Reopen the question if the limit is passed. The two-session count starts at the next session.
 
 ## Design: per-project logging
 
@@ -67,7 +73,7 @@ Problem: shortcuts and `log-turn.sh` are tied to the CT root, so TLC turns were 
 - **One shared file** `~/.config/copper/projects`: first line `active <short_name>`, then one `short_name<TAB>path` line per project. `SOS <short_name>` as the first clipboard line rewrites the `active` line; later presses log to the active project. Refuse an unregistered name.
 - **`project.conf` in each repo** holds `short_name`, `long_name`, `directory_name`; the scripts read it. `bootstrap-project.sh` should fill it in from a third argument (parked).
 - **Every notification names the project**: `Logged user turn 46 → CT`.
-- **Closed or unclosed is derived from the log**, with no tracking folder: a session is closed if its last user turn starts with `COS <short_name>` and a Claude turn follows. At the next `SOS`, an unclosed previous log gets a warning block, and `log-turn.sh close --previous` appends a "closed late, reason unknown" note.
+- **Closed or unclosed is derived from the log**, with no tracking folder: a session is closed if its last user turn starts with `COS <short_name>` and a Claude turn follows. At the next `SOS`, an unclosed previous log gets a warning block, and `log-turn.sh close --previous` appends a "closed late, reason unknown" note. Until the script exists, `SOS` and `COS` are only typed markers.
 - **Numbering:** a new repo's first turn is 1, without forcing `--turn`. Heading labels use `short_name`.
 - **Commit failure must be loud**: replace `|| true` after the commit with a notification and non-zero exit.
 - **`sync.sh`** path list: add `tools` and any root `STATE.md`; take the list from one place.
@@ -81,17 +87,27 @@ Problem: shortcuts and `log-turn.sh` are tied to the CT root, so TLC turns were 
 - `docs/TOOLS.md` is a hand-written stopgap (manifest date 2026-11-09). New projects get scripts from the kit (`bootstrap-project.sh`), not from `scripts/`. Do not copy `setup-repo.sh`.
 - TLC sends needs as `REQUEST FOR THE COPPERTOOLCHAIN PROJECT` blocks; record them in `docs/requests/`.
 - The TLC repository exists and was created by `bootstrap-project.sh`. TLC's earlier work (three planning docs, two scripts, two SVG logos) may still need exporting from its old conversations.
-- TLC is on hold until the live-logging decision is made. Next TLC day: to be set by the user.
+- TLC may use ChatGPT to design and implement a mod for the modpack. The workflow is not yet recorded (open questions in decision 006).
+- TLC is on hold until Live Logging works. Next TLC day: to be set by the user.
 
 ## Current work, in order
 
-1. **Next CT session:** build the minimal per-project logger (`log-turn.sh`, `sync.sh`). First confirm whether it is already built by checking `scripts/log-turn.sh` for `SOS`. Test what can be tested and say what cannot.
-2. **After it works:** one timed Claude Code and SpecStory trial (cloud sync off, small CT task), then record the result in the decision's Actions.
-3. TLC resumes (`TLC · date · ...`) once logging is settled.
-4. Then: Gotify on every service that emails (table of source, method, test, date, result; no tokens in the repo); LAN test of the UDP tool (search the logs for `stand-in relay` and `Real game stage`); onboarding a friend (DJV22) with the kit; Survey 2 only when asked; home lab sprint (backups, updates, UPS monitoring, certificates).
+Next session title: `CT · 2026-11-12 · Live Logging decisions (day 2)`. First message states the turn number (expected 67). Declared multi-day task: Live Logging, start 2026-11-11, expected end 2026-11-13.
+
+1. **Small items first (about ten minutes, user at the desk):**
+   - Commit `docs/GLOSSARY.md` (new, from the 2026-11-11 reply).
+   - Apply the 007 edits: add the Term line; reword the Claude Code bullet to say it is not available on the current plan, so the trial is dropped unless CT itself is at risk; add the `## Discussion` section; add the Revisit-if line. These replace edits b and d from the earlier reply.
+   - Add a `## Discussion` section to `docs/decisions/000-decisionTemplate.md`.
+   - Add the Live Logging line to Names in this file (already done in this version).
+   - Run `git diff HEAD~1 -- STATE.md` against the earlier edit if wanted, to check the previous change landed.
+2. **Finish decision 006.** Four questions are open: (1) ChatGPT's role (design, code, or both; what it sees), (2) how its transcripts are logged and who reviews generated code, (3) the licence for the mod and the code, (4) whether the TLC README Tools section and `tools/FROM-COPPERTOOLCHAIN.md` exist.
+3. **Build the minimal per-project logger** (`log-turn.sh`, `sync.sh`), first checking whether `SOS` is already in `scripts/log-turn.sh`. Test what can be tested and say what cannot.
+4. TLC resumes (`TLC · date · ...`) once logging works.
+5. Then: Gotify on every service that emails (table of source, method, test, date, result; no tokens in the repo); LAN test of the UDP tool (search the logs for `stand-in relay` and `Real game stage`); onboarding a friend (DJV22) with the kit; Survey 2 only when asked; home lab sprint (backups, updates, UPS monitoring, certificates).
 
 ## Parked (do not raise unless asked or blocking)
 
+- Claude Code with SpecStory trial (revisit only if the CT project is at risk of failure or the plan changes)
 - `bootstrap-project.sh` creating `tools/FROM-COPPERTOOLCHAIN.md`, `project.conf` and `{{SHORT_NAME}}`
 - `docs/TOOLS.md` generator and its manifest columns
 - GPG: TLC signing status, GitHub "Verified", a cold-cache test of the shortcut; the GPG discussion itself is held for the off-record process
@@ -108,4 +124,4 @@ Problem: shortcuts and `log-turn.sh` are tied to the CT root, so TLC turns were 
 
 ## Where to look
 
-`docs/PROJECT-GUIDE.md` (map), `docs/runbooks/` (including `design-maxims.md` and `can-vs-should.md`), `docs/decisions/`, `assets/` (inventory), `surveys/` (templates), `templates/new-project-kit/` (the starter kit), `templates/instructions/CT-project-instructions.md` (recovery copy of this project's instructions; edit the file first, then paste), `log/` (full history; search by phrase, not by turn number).
+`docs/PROJECT-GUIDE.md` (map), `docs/GLOSSARY.md`, `docs/runbooks/` (including `design-maxims.md` and `can-vs-should.md`), `docs/decisions/`, `assets/` (inventory), `surveys/` (templates), `templates/new-project-kit/` (the starter kit), `templates/instructions/CT-project-instructions.md` (recovery copy of this project's instructions; edit the file first, then paste), `log/` (full history; search by phrase, not by turn number).
