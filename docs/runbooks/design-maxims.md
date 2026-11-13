@@ -101,6 +101,10 @@ Applied as: the backup is the fix, so test the restore, once per class of host.
 If it is stupid and it works, it is still stupid, and I was lucky.
 Applied as: write down that a working solution was luck, and put a "Revisit if" line on it.
 
+### Maxim 44 (on using a messy approach to doing a job; gloss)
+If it will blow a hole in the ground, it will double as an entrenching tool.
+Applied as: a tool strong enough to make a mess is usually strong enough to do the job. Test it where a mess is cheap. For the logging scripts: `COPPER_REGISTRY` and `COPPER_HOLD` point them at a throwaway registry, so use scratch repos for tests and keep the live logs for real turns. I hand edited it, it did the job, but "gloss" would be to have a throw-away to mangle.
+
 ### Maxim 61 (on grenades and small rooms)
 Do not bring big grenades into small rooms.
 Applied as: scripts that run as root on the hypervisor have a wide blast radius. Read them
